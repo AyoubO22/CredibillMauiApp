@@ -1,0 +1,28 @@
+<Shell
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customers="clr-namespace:CredibillMauiApp.Views.Customers"
+    xmlns:invoices="clr-namespace:CredibillMauiApp.Views.Invoices"
+    xmlns:payments="clr-namespace:CredibillMauiApp.Views.Payments"
+    xmlns:auth="clr-namespace:CredibillMauiApp.Views"
+    x:Class="CredibillMauiApp.AppShell">
+
+    <!-- Page de login -->
+    <ShellContent Route="login" ContentTemplate="{DataTemplate auth:LoginPage}" />
+
+    <!-- Tabs après login -->
+    <TabBar Route="main">
+        <ShellContent Title="Customers" Route="customers" ContentTemplate="{DataTemplate customers:CustomersPage}" />
+        <ShellContent Title="Invoices" Route="invoices" ContentTemplate="{DataTemplate invoices:InvoicesPage}" />
+        <ShellContent Title="Payments" Route="payments" ContentTemplate="{DataTemplate payments:PaymentsPage}" />
+    </TabBar>
+
+    <!-- Routes for navigation -->
+    <ShellContent Route="customerdetail" ContentTemplate="{DataTemplate customers:CustomerDetailPage}" />
+    <ShellContent Route="customeredit" ContentTemplate="{DataTemplate customers:CustomerEditPage}" />
+    <ShellContent Route="invoicedetail" ContentTemplate="{DataTemplate invoices:InvoiceDetailPage}" />
+    <ShellContent Route="invoiceedit" ContentTemplate="{DataTemplate invoices:InvoiceEditPage}" />
+    <ShellContent Route="paymentsdetail" ContentTemplate="{DataTemplate payments:PaymentsDetailPage}" />
+    <ShellContent Route="paymentedit" ContentTemplate="{DataTemplate payments:PaymentEditPage}" />
+    <ShellContent Route="privacypolicy" ContentTemplate="{DataTemplate auth:PrivacyPolicyPage}" />
+</Shell>

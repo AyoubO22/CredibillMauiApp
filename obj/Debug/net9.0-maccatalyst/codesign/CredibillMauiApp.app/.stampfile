@@ -1,0 +1,1 @@
+-v --force --timestamp=none --sign - --entitlements /Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/obj/Debug/net9.0-maccatalyst/Entitlements.xcent /Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/bin/Debug/net9.0-maccatalyst/CredibillMauiApp.app

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CredibillMauiApp.ViewModels"
+             x:Class="CredibillMauiApp.Views.PrivacyPolicyPage">
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Label Text="Privacy Policy" FontSize="Large" FontAttributes="Bold" />
+            <Label Text="Your data is stored locally and securely. You can delete all your data at any time. We comply with GDPR and do not share your data with third parties." />
+            <Button Text="Delete my data" Command="{Binding DeleteDataCommand}" BackgroundColor="#E53935" TextColor="White" FontSize="18" Padding="10" CornerRadius="8" AutomationId="DeleteDataButton" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,10 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CredibillMauiApp.Views.Customers.CustomerDetailPage"
+             Title="Customer Details">
+    <StackLayout Padding="20">
+        <Label Text="{Binding Name}" FontSize="24"/>
+        <Label Text="{Binding Email}" FontSize="16"/>
+        <Button Text="Editer" Clicked="OnEditClicked"/>
+    </StackLayout>
+</ContentPage>

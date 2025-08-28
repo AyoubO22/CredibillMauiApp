@@ -1,0 +1,10 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CredibillMauiApp.Views.Payments.PaymentEditPage"
+             Title="Edit Payment">
+    <StackLayout Padding="20">
+        <Entry Text="{Binding Reference}" Placeholder="Référence"/>
+        <Entry Text="{Binding Amount}" Placeholder="Montant"/>
+        <Button Text="Sauvegarder" Clicked="OnSaveClicked"/>
+    </StackLayout>
+</ContentPage>

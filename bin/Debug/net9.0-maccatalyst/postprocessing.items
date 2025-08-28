@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <_PostProcessingItem Include="CredibillMauiApp.app/Contents/MacOS/CredibillMauiApp">
+      <IsAppExtension>false</IsAppExtension>
+      <BCSymbolMapName>CredibillMauiApp.bcsymbolmap</BCSymbolMapName>
+      <NoDSymUtil>true</NoDSymUtil>
+      <dSYMSourcePathExists>false</dSYMSourcePathExists>
+      <NoSymbolStrip>true</NoSymbolStrip>
+      <dSYMInfoPlistRelativePath>CredibillMauiApp.app.dSYM\Contents\Info.plist</dSYMInfoPlistRelativePath>
+      <SymbolFile>/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/obj/Debug/net9.0-maccatalyst/mtouch-symbols.list</SymbolFile>
+      <DSymName>CredibillMauiApp.app.dSYM</DSymName>
+      <SourceProjectPath>/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp</SourceProjectPath>
+      <IsXPCService></IsXPCService>
+    </_PostProcessingItem>
+  </ItemGroup>
+</Project>
