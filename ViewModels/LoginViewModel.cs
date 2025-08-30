@@ -43,7 +43,7 @@ namespace CredibillMauiApp.ViewModels
             var success = await _authService.LoginAsync(Username, Password);
             if (!success)
             {
-                ErrorMessage = "Identifiants invalides.";
+                ErrorMessage = "Invalid credentials.";
             }
             else
             {

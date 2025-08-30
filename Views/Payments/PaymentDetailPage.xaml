@@ -5,6 +5,6 @@
     <StackLayout Padding="20">
         <Label Text="{Binding Reference}" FontSize="24"/>
         <Label Text="{Binding Amount}" FontSize="16"/>
-        <Button Text="Editer" Clicked="OnEditClicked"/>
+        <Button Text="Edit" Clicked="OnEditClicked"/>
     </StackLayout>
 </ContentPage>

@@ -10,14 +10,14 @@
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            var user = await Microsoft.Maui.Storage.SecureStorage.GetAsync("LoggedUser");
+            var user = await CredibillMauiApp.Services.TokenStorage.GetAsync("LoggedUser");
             if (!string.IsNullOrEmpty(user))
             {
-                WelcomeLabel.Text = $"Bienvenue {user}!";
+                WelcomeLabel.Text = $"Welcome to Credibill, {user}!";
             }
             else
             {
-                WelcomeLabel.Text = "Bienvenue !";
+                WelcomeLabel.Text = "Welcome to Credibill";
             }
         }
         private async void GoToOtherPage_Clicked(object sender, EventArgs e)

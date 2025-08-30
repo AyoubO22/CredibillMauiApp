@@ -2,9 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CredibillMauiApp.Views.Invoices.InvoiceEditPage"
              Title="Edit Invoice">
-    <StackLayout Padding="20">
-    <Entry Text="{Binding InvoiceId}" Placeholder="Numéro de facture"/>
-        <Entry Text="{Binding Amount}" Placeholder="Montant"/>
-        <Button Text="Sauvegarder" Clicked="OnSaveClicked"/>
+    <StackLayout Padding="20" Spacing="10">
+        <Picker Title="Customer" ItemsSource="{Binding Customers}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedCustomer}" />
+        <Entry Text="{Binding Invoice.Amount}" Placeholder="Amount" Keyboard="Numeric"/>
+        <Button Text="Save" Clicked="OnSaveClicked"/>
     </StackLayout>
 </ContentPage>

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Maui.Storage;
+using CredibillMauiApp.Services;
 using CredibillMauiApp.Services;
 using CommunityToolkit.Mvvm.Input;
 
@@ -26,7 +26,7 @@ namespace CredibillMauiApp.ViewModels
         {
             if (_dbService != null)
                 await _dbService.DeleteAllDataAsync();
-            SecureStorage.RemoveAll();
+            TokenStorage.RemoveAll();
         }
     }
 }

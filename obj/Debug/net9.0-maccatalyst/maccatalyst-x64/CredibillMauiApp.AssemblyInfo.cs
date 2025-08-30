@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CredibillMauiApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+e89660c82d3dd2b76d2f498996e2d2709c596a8d")]
 [assembly: System.Reflection.AssemblyProductAttribute("CredibillMauiApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CredibillMauiApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

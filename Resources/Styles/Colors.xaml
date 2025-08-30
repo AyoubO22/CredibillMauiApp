@@ -42,4 +42,16 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
+    <!-- Apple-like accent palette -->
+    <Color x:Key="AccentBlue">#007AFF</Color>
+    <Color x:Key="BackgroundSoft">#F2F2F7</Color>
+    <Color x:Key="BackgroundSoftDark">#2C2C2E</Color>
+    <Color x:Key="CardBackground">#F8F9FB</Color>
+    <Color x:Key="CardBackgroundDark">#1C1C1E</Color>
+    <SolidColorBrush x:Key="AccentBlueBrush" Color="{StaticResource AccentBlue}"/>
+    <SolidColorBrush x:Key="BackgroundSoftBrush" Color="{StaticResource BackgroundSoft}"/>
+    <SolidColorBrush x:Key="BackgroundSoftDarkBrush" Color="{StaticResource BackgroundSoftDark}"/>
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackground}"/>
+    <SolidColorBrush x:Key="CardBackgroundDarkBrush" Color="{StaticResource CardBackgroundDark}"/>
 </ResourceDictionary>

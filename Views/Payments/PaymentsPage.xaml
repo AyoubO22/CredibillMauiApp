@@ -7,28 +7,28 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackLayout Grid.Row="0" Padding="20,10,20,0">
-            <Label Text="Paiements" FontSize="28" FontAttributes="Bold" TextColor="#2D5CFE" HorizontalOptions="Center" />
-            <SearchBar Placeholder="Rechercher..." Text="{Binding SearchText}" Margin="0,10,0,0" />
+        <StackLayout Grid.Row="0" Padding="20,10,20,0" Spacing="8">
+            <Label Text="Payments" Style="{StaticResource TitleLargeStyle}" HorizontalOptions="Center" />
+            <SearchBar Placeholder="Search..." Text="{Binding SearchText}" Margin="0,6,0,0" />
         </StackLayout>
-        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCommand}">
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsBusy}" Command="{Binding LoadAsyncCommand}">
             <CollectionView ItemsSource="{Binding FilteredPayments}" SelectionMode="Single" SelectionChanged="OnPaymentSelected" Margin="10">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="1" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border Stroke="#E0E3EA" StrokeThickness="1" Background="#F5F7FB" Margin="0,5" Padding="15" StrokeShape="RoundRectangle 12">
+                        <Border Style="{StaticResource CardBorderStyle}">
                             <VerticalStackLayout>
-                                <Label Text="Réf: {Binding Reference}" FontSize="18" FontAttributes="Bold" TextColor="#222" />
-                                <Label Text="Montant: {Binding Amount}" FontSize="14" TextColor="#666" />
-                                <Label Text="Date: {Binding DatePaid, StringFormat='dd/MM/yyyy'}" FontSize="12" TextColor="#999" />
+                                <Label Text="{Binding Reference, StringFormat='Ref: {0}'}" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#222222, Dark=White}" />
+                                <Label Text="{Binding Amount, StringFormat='{0}€ payment'}" FontSize="14" TextColor="{AppThemeBinding Light=#666666, Dark=#D1D1D6}" />
+                                <Label Text="{Binding DatePaid, StringFormat='Date: {0:dd/MM/yyyy}'}" FontSize="12" TextColor="{AppThemeBinding Light=#999999, Dark=#A1A1A6}" />
                             </VerticalStackLayout>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        <Button Text="+" Command="{Binding AddCommand}" BackgroundColor="#2D5CFE" TextColor="White" FontSize="32" WidthRequest="60" HeightRequest="60" CornerRadius="30" VerticalOptions="End" HorizontalOptions="End" Margin="20" />
+        <Button Text="+" Command="{Binding AddCommand}" Style="{StaticResource PrimaryActionButton}" FontSize="28" WidthRequest="60" HeightRequest="60" CornerRadius="30" VerticalOptions="End" HorizontalOptions="End" Margin="20" />
     </Grid>
 </ContentPage>

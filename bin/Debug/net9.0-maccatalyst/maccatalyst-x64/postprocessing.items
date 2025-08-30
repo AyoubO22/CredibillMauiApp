@@ -8,9 +8,9 @@
       <dSYMSourcePathExists>false</dSYMSourcePathExists>
       <NoSymbolStrip>true</NoSymbolStrip>
       <dSYMInfoPlistRelativePath>CredibillMauiApp.app.dSYM\Contents\Info.plist</dSYMInfoPlistRelativePath>
-      <SymbolFile>/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/obj/Debug/net9.0-maccatalyst/mtouch-symbols-maccatalyst-x64.list</SymbolFile>
+      <SymbolFile>/Users/ayoubouaadoud/Desktop/CredibillMauiApp/obj/Debug/net9.0-maccatalyst/mtouch-symbols-maccatalyst-x64.list</SymbolFile>
       <DSymName>CredibillMauiApp.app.dSYM</DSymName>
-      <SourceProjectPath>/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp</SourceProjectPath>
+      <SourceProjectPath>/Users/ayoubouaadoud/Desktop/CredibillMauiApp</SourceProjectPath>
       <IsXPCService></IsXPCService>
     </_PostProcessingItem>
   </ItemGroup>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/CredibillMauiApp.csproj": {}
+    "/Users/ayoubouaadoud/Desktop/CredibillMauiApp/CredibillMauiApp.csproj": {}
   },
   "projects": {
-    "/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/CredibillMauiApp.csproj": {
+    "/Users/ayoubouaadoud/Desktop/CredibillMauiApp/CredibillMauiApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/CredibillMauiApp.csproj",
+        "projectUniqueName": "/Users/ayoubouaadoud/Desktop/CredibillMauiApp/CredibillMauiApp.csproj",
         "projectName": "CredibillMauiApp",
-        "projectPath": "/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/CredibillMauiApp.csproj",
+        "projectPath": "/Users/ayoubouaadoud/Desktop/CredibillMauiApp/CredibillMauiApp.csproj",
         "packagesPath": "/Users/ayoubouaadoud/.nuget/packages/",
-        "outputPath": "/Users/ayoubouaadoud/Desktop/Devoirs/CredibillMauiApp/obj/",
+        "outputPath": "/Users/ayoubouaadoud/Desktop/CredibillMauiApp/obj/",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "configFilePaths": [
@@ -225,9 +225,6 @@
           "#import": []
         },
         "maccatalyst-arm64": {
-          "#import": []
-        },
-        "maccatalyst-x64": {
           "#import": []
         }
       }

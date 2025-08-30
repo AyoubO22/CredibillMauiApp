@@ -8,8 +8,9 @@ namespace CredibillMauiApp.ViewModels.Payments;
 
 public partial class PaymentsListViewModel : BaseViewModel
 {
-    private readonly IApiClient _api;
+    private readonly PaymentService _service;
 
+    public RelayCommand AddCommand { get; }
 
     [ObservableProperty] ObservableCollection<Payment> payments = new();
 
@@ -29,7 +30,16 @@ public partial class PaymentsListViewModel : BaseViewModel
         OnPropertyChanged(nameof(FilteredPayments));
     }
 
-    public PaymentsListViewModel(IApiClient api) => _api = api;
+    partial void OnPaymentsChanged(ObservableCollection<Payment> value)
+    {
+        OnPropertyChanged(nameof(FilteredPayments));
+    }
+
+    public PaymentsListViewModel(PaymentService service)
+    {
+        _service = service;
+        AddCommand = new RelayCommand(async () => await Shell.Current.GoToAsync("paymentedit"));
+    }
 
     [RelayCommand]
     public async Task LoadAsync()
@@ -38,9 +48,8 @@ public partial class PaymentsListViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            var result = await _api.GetPaymentsAsync();
-            if (result.Success) Payments = new ObservableCollection<Payment>(result.Data!);
-            else ErrorMessage = result.Error;
+            var list = await _service.GetPaymentsAsync();
+            Payments = new ObservableCollection<Payment>(list);
         }
         finally { IsBusy = false; }
     }

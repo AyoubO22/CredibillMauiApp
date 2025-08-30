@@ -7,12 +7,11 @@ namespace CredibillMauiApp;
 
 public partial class App : Application
 {
-	public static IServiceProvider Services { get; private set; }
+	public static IServiceProvider? Services { get; set; }
 
 	public App()
 	{
 		InitializeComponent();
-	Services = ((IPlatformApplication)Current).Services;
 		// Do not set MainPage here, as it's deprecated.
 	}
 
