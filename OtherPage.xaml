@@ -1,13 +1,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CredibillMauiApp.OtherPage"
-             Title="Autre page">
+             Title="Other Page">
 
     <StackLayout Padding="20" VerticalOptions="Center">
-        <Label Text="Ceci est l'autre page" 
+        <Label Text="This is the other page" 
                HorizontalOptions="Center" 
                FontSize="24"/>
-        <Button Text="Retour à l'accueil" 
+        <Button Text="Back to Home" 
                 Clicked="GoBack_Clicked" 
                 HorizontalOptions="Center"/>
     </StackLayout>

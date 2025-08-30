@@ -16,7 +16,10 @@
 	<!-- Platform-specific RuntimeIdentifiers -->
 	<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">android-arm64;android-x86;android-x64</RuntimeIdentifiers>
 	<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">ios-arm64;iossimulator-arm64</RuntimeIdentifiers>
-	<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers>
+    <!-- Use single-arch for Debug to avoid merge conflicts when creating a fat app -->
+    <RuntimeIdentifier Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst' and '$(Configuration)' == 'Debug'">maccatalyst-arm64</RuntimeIdentifier>
+    <!-- Build universal binary only for Release -->
+    <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst' and '$(Configuration)' == 'Release'">maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers>
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>CredibillMauiApp</RootNamespace>
@@ -46,7 +49,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<ItemGroup>
+  <ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
@@ -70,6 +73,18 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-	</ItemGroup>
+  </ItemGroup>
+
+  <!-- Strip extended attributes on Mac Catalyst app bundle before codesign -->
+  <Target Name="SanitizeMacCatalystApp" AfterTargets="_CreateAppBundle;_ResolveAppBundle" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">
+    <Message Text="Sanitizing Mac Catalyst app bundle: $(OutputPath)$(AssemblyName).app" Importance="high" />
+    <Exec Command="xattr -rc &quot;$(OutputPath)$(AssemblyName).app&quot;" ContinueOnError="true" />
+  </Target>
+
+  <!-- Use ad-hoc signing for Mac Catalyst Debug so no dev cert is required -->
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst' and '$(Configuration)' == 'Debug'">
+    <CodesignKey>-</CodesignKey>
+    <CodesignProvision></CodesignProvision>
+  </PropertyGroup>
 
 </Project>

@@ -3,8 +3,8 @@
              x:Class="CredibillMauiApp.Views.Customers.CustomerEditPage"
              Title="Edit Customer">
     <StackLayout Padding="20">
-        <Entry Text="{Binding Name}" Placeholder="Nom"/>
-        <Entry Text="{Binding Email}" Placeholder="Email"/>
-        <Button Text="Sauvegarder" Clicked="OnSaveClicked"/>
+        <Entry Text="{Binding Customer.Name}" Placeholder="Name"/>
+        <Entry Text="{Binding Customer.Email}" Placeholder="Email"/>
+        <Button Text="Save" Clicked="OnSaveClicked"/>
     </StackLayout>
 </ContentPage>

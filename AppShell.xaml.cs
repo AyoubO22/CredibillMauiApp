@@ -2,6 +2,8 @@
 using CredibillMauiApp.Views.Customers;
 using CredibillMauiApp.Views.Payments;
 using CredibillMauiApp.Views.Invoices;
+using CredibillMauiApp.Views;
+using CredibillMauiApp.Services;
 
 namespace CredibillMauiApp;
 
@@ -30,5 +32,26 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("invoiceedit", typeof(CredibillMauiApp.Views.Invoices.InvoiceEditPage));
         Routing.RegisterRoute("paymentdetails", typeof(CredibillMauiApp.Views.Payments.PaymentDetailPage));
         Routing.RegisterRoute("paymentedit", typeof(CredibillMauiApp.Views.Payments.PaymentEditPage));
+
+        // Auth pages as registered routes (to have a back button)
+        Routing.RegisterRoute("login", typeof(LoginPage));
+        Routing.RegisterRoute("register", typeof(RegisterPage));
+    }
+
+    private async void OnSignOutClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var auth = App.Services.GetService(typeof(AuthService)) as AuthService;
+            auth?.Logout();
+        }
+        catch { }
+        FlyoutBehavior = FlyoutBehavior.Disabled;
+        await Shell.Current.GoToAsync("///auth");
+    }
+
+    private async void OnPrivacyClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("///privacypolicy");
     }
 }

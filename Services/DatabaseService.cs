@@ -1,4 +1,5 @@
 using SQLite;
+using SQLitePCL;
 using System.IO;
 using CredibillMauiApp.Models;
 using System.Threading.Tasks;
@@ -12,15 +13,19 @@ namespace CredibillMauiApp.Services
 
         public DatabaseService()
         {
+            // Ensure SQLite native bindings are loaded on all platforms
+            Batteries_V2.Init();
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "credibill.db3");
             _db = new SQLiteAsyncConnection(dbPath);
         }
 
         public async Task InitAsync()
         {
+            try { await _db.ExecuteAsync("PRAGMA foreign_keys = ON;"); } catch { }
             await _db.CreateTableAsync<Customer>();
             await _db.CreateTableAsync<Invoice>();
             await _db.CreateTableAsync<Payment>();
+            await _db.CreateTableAsync<User>();
         }
 
         public async Task SeedAsync()
@@ -55,9 +60,11 @@ namespace CredibillMauiApp.Services
 
         public async Task DeleteAllDataAsync()
         {
-            await _db.DeleteAllAsync<Customer>();
-            await _db.DeleteAllAsync<Invoice>();
+            // Delete in dependency order: Payments -> Invoices -> Customers -> Users
             await _db.DeleteAllAsync<Payment>();
+            await _db.DeleteAllAsync<Invoice>();
+            await _db.DeleteAllAsync<Customer>();
+            await _db.DeleteAllAsync<User>();
         }
 
         public async Task AddCustomerAsync(Customer customer)

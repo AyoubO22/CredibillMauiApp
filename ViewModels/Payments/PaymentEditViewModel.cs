@@ -2,38 +2,63 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CredibillMauiApp.Models;
 using CredibillMauiApp.Services;
+using System.Collections.ObjectModel;
 
 namespace CredibillMauiApp.ViewModels.Payments;
 
 public partial class PaymentEditViewModel : BaseViewModel
 {
-    // Dummy data store
-    public static List<Payment> Payments { get; set; } = new List<Payment>
-    {
-    new Payment { Id = 1, InvoiceId = 1, Amount = 50, DatePaid = DateTime.Today },
-    new Payment { Id = 2, InvoiceId = 2, Amount = 75, DatePaid = DateTime.Today.AddDays(-1) }
-    };
+    private readonly PaymentService _service;
+    private readonly InvoiceService _invoiceService;
 
     [ObservableProperty] public Payment? payment;
 
-    public PaymentEditViewModel() {}
+    [ObservableProperty]
+    public ObservableCollection<Invoice> invoices = new();
+
+    [ObservableProperty]
+    public Invoice? selectedInvoice;
+
+    public PaymentEditViewModel(PaymentService service, InvoiceService invoiceService)
+    {
+        _service = service;
+        _invoiceService = invoiceService;
+    }
 
     [RelayCommand]
-    public void Save()
+    public async Task SaveAsync()
     {
         if (Payment == null) return;
-        IsBusy = true;
-        if (Payment.Id == 0)
+        try
         {
-            Payment.Id = Payments.Count > 0 ? Payments.Max(p => p.Id) + 1 : 1;
-            Payments.Add(Payment);
+            IsBusy = true;
+            if (SelectedInvoice != null)
+                Payment.InvoiceId = SelectedInvoice.Id;
+            if (Payment.InvoiceId == 0)
+                throw new Exception("Please select an invoice.");
+            if (Payment.Id == 0)
+            {
+                await _service.AddPaymentAsync(Payment);
+            }
+            else
+            {
+                await _service.UpdatePaymentAsync(Payment);
+            }
         }
-        else
-        {
-            var index = Payments.FindIndex(p => p.Id == Payment.Id);
-            if (index >= 0)
-                Payments[index] = Payment;
-        }
-        IsBusy = false;
+        finally { IsBusy = false; }
+    }
+
+    public async Task LoadInvoicesAsync()
+    {
+        var list = await _invoiceService.GetInvoicesAsync();
+        Invoices = new ObservableCollection<Invoice>(list);
+        if (Payment != null && Payment.InvoiceId > 0)
+            SelectedInvoice = Invoices.FirstOrDefault(i => i.Id == Payment.InvoiceId);
+    }
+
+    partial void OnSelectedInvoiceChanged(Invoice? value)
+    {
+        if (Payment != null && value != null)
+            Payment.InvoiceId = value.Id;
     }
 }

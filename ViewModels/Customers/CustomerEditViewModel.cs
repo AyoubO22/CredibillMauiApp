@@ -7,35 +7,31 @@ namespace CredibillMauiApp.ViewModels.Customers;
 
 public partial class CustomerEditViewModel : BaseViewModel
 {
-    // Dummy data store
-    public static List<Customer> Customers { get; set; } = new List<Customer>
-    {
-        new Customer { Id = 1, Name = "Alice", Email = "alice@email.com" },
-        new Customer { Id = 2, Name = "Bob", Email = "bob@email.com" }
-    };
+    private readonly CustomerService _service;
 
     [ObservableProperty] public Customer? customer;
 
-    public CustomerEditViewModel() {}
+    public CustomerEditViewModel(CustomerService service)
+    {
+        _service = service;
+    }
 
     [RelayCommand]
-    public void Save()
+    public async Task SaveAsync()
     {
         if (Customer == null) return;
-        IsBusy = true;
-        if (Customer.Id == 0)
+        try
         {
-            // Création
-            Customer.Id = Customers.Count > 0 ? Customers.Max(c => c.Id) + 1 : 1;
-            Customers.Add(Customer);
+            IsBusy = true;
+            if (Customer.Id == 0)
+            {
+                await _service.AddCustomerAsync(Customer);
+            }
+            else
+            {
+                await _service.UpdateCustomerAsync(Customer);
+            }
         }
-        else
-        {
-            // Mise à jour
-            var index = Customers.FindIndex(c => c.Id == Customer.Id);
-            if (index >= 0)
-                Customers[index] = Customer;
-        }
-        IsBusy = false;
+        finally { IsBusy = false; }
     }
 }

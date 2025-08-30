@@ -2,9 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CredibillMauiApp.Views.Payments.PaymentEditPage"
              Title="Edit Payment">
-    <StackLayout Padding="20">
-        <Entry Text="{Binding Reference}" Placeholder="Référence"/>
-        <Entry Text="{Binding Amount}" Placeholder="Montant"/>
-        <Button Text="Sauvegarder" Clicked="OnSaveClicked"/>
+    <StackLayout Padding="20" Spacing="10">
+        <Picker Title="Invoice" ItemsSource="{Binding Invoices}" ItemDisplayBinding="{Binding Id}" SelectedItem="{Binding SelectedInvoice}" />
+        <Entry Text="{Binding Payment.Reference}" Placeholder="Reference"/>
+        <Entry Text="{Binding Payment.Amount}" Placeholder="Amount" Keyboard="Numeric"/>
+        <Button Text="Save" Clicked="OnSaveClicked"/>
     </StackLayout>
 </ContentPage>

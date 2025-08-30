@@ -12,34 +12,62 @@ public class ApiClient : IApiClient
         PropertyNameCaseInsensitive = true
     };
 
-    public ApiClient(HttpClient http) => _http = http;
+    public ApiClient(HttpClient http)
+    {
+        _http = http;
+        if (_http.BaseAddress == null)
+        {
+            try { _http.BaseAddress = new Uri(Constants.BaseApiUrl); } catch { /* ignore */ }
+        }
+    }
 
     // Auth endpoints
     public async Task<bool> RegisterAsync(string username, string password)
     {
-        var payload = new { Username = username, Password = password };
-        var response = await _http.PostAsJsonAsync("api/auth/register", payload, _json);
-        return response.IsSuccessStatusCode;
+        try
+        {
+            var payload = new { Username = username, Password = password };
+            var response = await _http.PostAsJsonAsync("auth/register", payload, _json);
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public class TokenResult { public string? Jwt { get; set; } public string? RefreshToken { get; set; } }
 
     public async Task<TokenResult?> LoginAsync(string username, string password)
     {
-        var payload = new { Username = username, Password = password };
-        var response = await _http.PostAsJsonAsync("api/auth/login", payload, _json);
-        if (!response.IsSuccessStatusCode) return null;
-        var tokens = await response.Content.ReadFromJsonAsync<TokenResult>(_json);
-        return tokens;
+        try
+        {
+            var payload = new { Username = username, Password = password };
+            var response = await _http.PostAsJsonAsync("auth/login", payload, _json);
+            if (!response.IsSuccessStatusCode) return null;
+            var tokens = await response.Content.ReadFromJsonAsync<TokenResult>(_json);
+            return tokens;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     public async Task<TokenResult?> RefreshTokenAsync(string refreshToken)
     {
-        var payload = new { RefreshToken = refreshToken };
-        var response = await _http.PostAsJsonAsync("api/auth/refresh", payload, _json);
-        if (!response.IsSuccessStatusCode) return null;
-        var tokens = await response.Content.ReadFromJsonAsync<TokenResult>(_json);
-        return tokens;
+        try
+        {
+            var payload = new { RefreshToken = refreshToken };
+            var response = await _http.PostAsJsonAsync("auth/refresh", payload, _json);
+            if (!response.IsSuccessStatusCode) return null;
+            var tokens = await response.Content.ReadFromJsonAsync<TokenResult>(_json);
+            return tokens;
+        }
+        catch
+        {
+            return null;
+        }
     }
     // Removed duplicate fields and constructor
 
@@ -74,7 +102,7 @@ public class ApiClient : IApiClient
                 var data = await response.Content.ReadFromJsonAsync<Customer>(_json);
                 return ApiResult<Customer>.Ok(data!);
             }
-            return ApiResult<Customer>.Fail("Erreur création");
+            return ApiResult<Customer>.Fail("Create error");
         }
         catch (Exception ex) { return ApiResult<Customer>.Fail(ex.Message); }
     }
@@ -114,7 +142,7 @@ public class ApiClient : IApiClient
                 var data = await response.Content.ReadFromJsonAsync<Invoice>(_json);
                 return ApiResult<Invoice>.Ok(data!);
             }
-            return ApiResult<Invoice>.Fail("Erreur création");
+            return ApiResult<Invoice>.Fail("Create error");
         }
         catch (Exception ex) { return ApiResult<Invoice>.Fail(ex.Message); }
     }
@@ -154,7 +182,7 @@ public class ApiClient : IApiClient
                 var data = await response.Content.ReadFromJsonAsync<Payment>(_json);
                 return ApiResult<Payment>.Ok(data!);
             }
-            return ApiResult<Payment>.Fail("Erreur création");
+            return ApiResult<Payment>.Fail("Create error");
         }
         catch (Exception ex) { return ApiResult<Payment>.Fail(ex.Message); }
     }

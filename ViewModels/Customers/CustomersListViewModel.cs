@@ -8,13 +8,13 @@ namespace CredibillMauiApp.ViewModels.Customers;
 
 public partial class CustomersListViewModel : BaseViewModel
 {
-    private readonly IApiClient _api;
+    private readonly CustomerService _service;
 
     public RelayCommand AddCommand { get; }
 
-    public CustomersListViewModel(IApiClient api)
+    public CustomersListViewModel(CustomerService service)
     {
-        _api = api;
+        _service = service;
         AddCommand = new RelayCommand(async () => await Shell.Current.GoToAsync("customeredit"));
     }
 
@@ -36,6 +36,11 @@ public partial class CustomersListViewModel : BaseViewModel
         OnPropertyChanged(nameof(FilteredCustomers));
     }
 
+    partial void OnCustomersChanged(ObservableCollection<Customer> value)
+    {
+        OnPropertyChanged(nameof(FilteredCustomers));
+    }
+
     [RelayCommand]
     public async Task LoadAsync()
     {
@@ -43,19 +48,8 @@ public partial class CustomersListViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            var result = await _api.GetCustomersAsync();
-            if (result.Success && result.Data != null && result.Data.Count > 0)
-                Customers = new ObservableCollection<Customer>(result.Data!);
-            else
-            {
-                // fallback to local demo data
-                Customers = new ObservableCollection<Customer>(CustomerEditViewModel.Customers);
-            }
-        }
-        catch (Exception)
-        {
-            // fallback to local demo data
-            Customers = new ObservableCollection<Customer>(CustomerEditViewModel.Customers);
+            var list = await _service.GetCustomersAsync();
+            Customers = new ObservableCollection<Customer>(list);
         }
         finally
         {

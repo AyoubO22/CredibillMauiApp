@@ -26,8 +26,14 @@ public static class MauiProgram
             });
 
         // Injection de dépendances
-        builder.Services.AddSingleton<HttpClient>();
+        // Configure a base address for the shared HttpClient used by ApiClient
+        builder.Services.AddSingleton(sp => new HttpClient
+        {
+            BaseAddress = new Uri(Constants.BaseApiUrl)
+        });
+        // Register one ApiClient instance and map IApiClient to the same instance
         builder.Services.AddSingleton<ApiClient>();
+        builder.Services.AddSingleton<IApiClient>(sp => sp.GetRequiredService<ApiClient>());
         builder.Services.AddSingleton<DatabaseService>();
         builder.Services.AddSingleton<SyncService>();
         builder.Services.AddSingleton<AuthService>();
@@ -43,10 +49,7 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-    // --- Services ---
-    builder.Services.AddSingleton<IApiClient, ApiClient>();
-    builder.Services.AddSingleton<DatabaseService>();
-    builder.Services.AddSingleton<AuthService>();
+        // --- Services --- (deduplicated above)
 
         // --- ViewModels ---
         builder.Services.AddTransient<CustomersListViewModel>();
@@ -75,6 +78,8 @@ public static class MauiProgram
         builder.Services.AddTransient<PaymentEditPage>();
 
         var app = builder.Build();
+        // Expose DI container globally for pages/viewmodels that use App.Services
+        App.Services = app.Services;
         // Initialize and seed local SQLite database
         var dbService = app.Services.GetService<DatabaseService>();
         Task.Run(async () => {

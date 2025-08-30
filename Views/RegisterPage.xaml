@@ -1,0 +1,25 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CredibillMauiApp.Views.RegisterPage"
+             Title="Sign up">
+    <VerticalStackLayout Padding="24" Spacing="16">
+        <Label Text="Create your account" Style="{StaticResource TitleLargeStyle}" HorizontalOptions="Center" />
+        <Border Style="{StaticResource CardBorderStyle}">
+            <VerticalStackLayout Spacing="10">
+                <Entry x:Name="NameEntry" Placeholder="Name" Style="{StaticResource RoundedEntryStyle}" />
+                <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" Style="{StaticResource RoundedEntryStyle}" />
+                <!-- Password + show/hide -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Style="{StaticResource RoundedEntryStyle}" />
+                    <Button Grid.Column="1" x:Name="TogglePasswordBtn" Text="Show" Clicked="OnTogglePasswordClicked" />
+                </Grid>
+                <Label Text="Password must contain at least 8 characters, one uppercase letter, one number, and one special character." FontSize="12" TextColor="#666" />
+                <Grid ColumnDefinitions="*,Auto">
+                    <Entry x:Name="ConfirmEntry" Placeholder="Confirm password" IsPassword="True" Style="{StaticResource RoundedEntryStyle}" />
+                    <Button Grid.Column="1" x:Name="ToggleConfirmBtn" Text="Show" Clicked="OnToggleConfirmClicked" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+        <Button Text="Create account" Clicked="OnCreateClicked" Style="{StaticResource PrimaryActionButton}" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -2,38 +2,63 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CredibillMauiApp.Models;
 using CredibillMauiApp.Services;
+using System.Collections.ObjectModel;
 
 namespace CredibillMauiApp.ViewModels.Invoices;
 
 public partial class InvoiceEditViewModel : BaseViewModel
 {
-    // Dummy data store
-    public static List<Invoice> Invoices { get; set; } = new List<Invoice>
-    {
-    new Invoice { Id = 1, CustomerId = 1, Amount = 100, DateIssued = DateTime.Today },
-    new Invoice { Id = 2, CustomerId = 2, Amount = 200, DateIssued = DateTime.Today.AddDays(-1) }
-    };
+    private readonly InvoiceService _service;
+    private readonly CustomerService _customersService;
 
     [ObservableProperty] public Invoice? invoice;
 
-    public InvoiceEditViewModel() {}
+    [ObservableProperty]
+    public ObservableCollection<Customer> customers = new();
+
+    [ObservableProperty]
+    public Customer? selectedCustomer;
+
+    public InvoiceEditViewModel(InvoiceService service, CustomerService customersService)
+    {
+        _service = service;
+        _customersService = customersService;
+    }
 
     [RelayCommand]
-    public void Save()
+    public async Task SaveAsync()
     {
         if (Invoice == null) return;
-        IsBusy = true;
-        if (Invoice.Id == 0)
+        try
         {
-            Invoice.Id = Invoices.Count > 0 ? Invoices.Max(i => i.Id) + 1 : 1;
-            Invoices.Add(Invoice);
+            IsBusy = true;
+            if (SelectedCustomer != null)
+                Invoice.CustomerId = SelectedCustomer.Id;
+            if (Invoice.CustomerId == 0)
+                throw new Exception("Please select a customer.");
+            if (Invoice.Id == 0)
+            {
+                await _service.AddInvoiceAsync(Invoice);
+            }
+            else
+            {
+                await _service.UpdateInvoiceAsync(Invoice);
+            }
         }
-        else
-        {
-            var index = Invoices.FindIndex(i => i.Id == Invoice.Id);
-            if (index >= 0)
-                Invoices[index] = Invoice;
-        }
-        IsBusy = false;
+        finally { IsBusy = false; }
+    }
+
+    public async Task LoadCustomersAsync()
+    {
+        var list = await _customersService.GetCustomersAsync();
+        Customers = new ObservableCollection<Customer>(list);
+        if (Invoice != null && Invoice.CustomerId > 0)
+            SelectedCustomer = Customers.FirstOrDefault(c => c.Id == Invoice.CustomerId);
+    }
+
+    partial void OnSelectedCustomerChanged(Customer? value)
+    {
+        if (Invoice != null && value != null)
+            Invoice.CustomerId = value.Id;
     }
 }
