@@ -1,0 +1,17 @@
+# Build artifacts
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.csproj.user
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# macOS / IDE
+.DS_Store
+.idea/
+*.iml
